@@ -1116,7 +1116,8 @@ class BaseSDTrainProcess(BaseTrainProcess):
                     orig_timesteps = torch.rand((batch_size,), device=latents.device)
 
                     if content_or_style == 'content':
-                        timestep_indices = orig_timesteps ** 3 * self.train_config.num_train_timesteps
+                        adjusted_timesteps = (1 - 0.7) * orig_timesteps + 0.7 * (orig_timesteps ** 3)
+                        timestep_indices = adjusted_timesteps * num_train_timesteps
                     elif content_or_style == 'style':
                         timestep_indices = (1 - orig_timesteps ** 3) * self.train_config.num_train_timesteps
 
